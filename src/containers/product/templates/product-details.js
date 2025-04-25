@@ -3,12 +3,11 @@ import {
   Box, Typography, Rating, Button, TextField, Paper, InputAdornment, Stack, IconButton
 } from '@mui/material';
 
-// Inline SVGs
-import PackageIcon from '../../icons/package.svg?react';
-import StarIcon from '../../icons/star.svg?react';
-import StarFilledIcon from '../../icons/star-filled.svg?react';
-import ZoomInIcon from '../../icons/zoom-in.svg?react';
-import ZoomOutIcon from '../../icons/zoom-out.svg?react';
+import PackageIcon from '../../../icons/package.svg?react';
+import StarIcon from '../../../icons/star.svg?react';
+import StarFilledIcon from '../../../icons/star-filled.svg?react';
+import ZoomInIcon from '../../../icons/zoom-in.svg?react';
+import ZoomOutIcon from '../../../icons/zoom-out.svg?react';
 
 const svgComponents = {
   'package.svg': PackageIcon,
@@ -43,7 +42,6 @@ const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) =
   return (
     <Paper elevation={2} sx={{ p: 4, m: 2 }}>
       <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-        {/* Image section with vertical thumbnails */}
         <Box sx={{ display: 'flex' }}>
           <Stack spacing={1} sx={{ mr: 2 }}>
             {article.images.map((img, idx) => {
@@ -69,7 +67,6 @@ const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) =
             })}
           </Stack>
 
-          {/* Main image with zoom */}
           <Box
             sx={{
               position: 'relative',
@@ -94,7 +91,6 @@ const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) =
           </Box>
         </Box>
 
-        {/* Product Info */}
         <Box sx={{ flex: 1 }}>
           <Typography variant="h5" gutterBottom>{article.title}</Typography>
           <Typography variant="subtitle2" color="text.secondary">by {article.supplier_name}</Typography>

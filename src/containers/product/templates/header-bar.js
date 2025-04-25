@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Typography, Box, IconButton, Badge, Button, TextField, InputAdornment } from '@mui/material';
-import FavoriteIcon from '../../icons/favorite.svg?react';
-import GridIcon from '../../icons/facts-soft.svg?react';
-import CartIcon from '../../icons/cart.svg?react';
+import FavoriteIcon from '../../../icons/favorite.svg?react';
+import GridIcon from '../../../icons/facts-soft.svg?react';
+import CartIcon from '../../../icons/cart.svg?react';
 
 const HeaderBar = ({ article, cartCount, animate, showFloatingButton, handleAddToCart, quantity, onQuantityChange }) => {
   const [elevate, setElevate] = useState(false);
@@ -20,7 +20,7 @@ const HeaderBar = ({ article, cartCount, animate, showFloatingButton, handleAddT
   return (
     <AppBar position="sticky" elevation={elevate ? 4 : 0} sx={{ background: '#fff', borderBottom: '1px solid #ccc', color: 'black' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography variant="h6" noWrap>{article.title}</Typography>
+        <Typography color="error" variant="h6" noWrap>{article.title}</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {showFloatingButton && (
             <>
