@@ -15,14 +15,17 @@ This is a UI implementation challenge for the Jaggaer Frontend Developer Test. I
 ## 🚀 Getting Started
 
 ### 1. **Clone the Repository**
-
-```bash
 git clone https://github.com/SwatiKumar03031997/jaggaer-frontend.git
 cd jaggaer-frontend
-2. Install Dependencies
+
+### 2. **Install Dependencies**
 npm install
-If you face peer dependency issues:
+
+### 3. **If you face peer dependency issues**
 npm install --legacy-peer-deps
-3. Run the Dev Server
+
+### 4. **Run the Dev Server**
 npx webpack serve
 Open your browser at http://localhost:8080
+
+
