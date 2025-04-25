@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
-  Box, Typography, Rating, Button, TextField, Paper, InputAdornment, Stack, IconButton
+  Box, Typography, Rating, Button, TextField,
+  Paper, InputAdornment, Stack, IconButton
 } from '@mui/material';
 
 import PackageIcon from '../../../icons/package.svg?react';
@@ -15,26 +16,15 @@ const svgComponents = {
   'star-filled.svg': StarFilledIcon,
 };
 
-const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) => {
-  const [quantity, setQuantity] = useState(1);
+const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange, quantity }) => {
   const [selectedImage, setSelectedImage] = useState(article.images[0]);
   const [zoomed, setZoomed] = useState(false);
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setQuantity(value);
-    onQuantityChange(value);
-  };
 
   const handleClick = () => {
     const qty = parseInt(quantity, 10);
     if (qty > 0) {
       onAddToCart(qty);
     }
-  };
-
-  const handleToggleZoom = () => {
-    setZoomed((prev) => !prev);
   };
 
   const SelectedSvg = svgComponents[selectedImage];
@@ -51,8 +41,7 @@ const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) =
                   key={idx}
                   onClick={() => setSelectedImage(img)}
                   sx={{
-                    width: 60,
-                    height: 60,
+                    width: 60, height: 60,
                     border: selectedImage === img ? '2px solid red' : '1px solid #ccc',
                     borderRadius: 1,
                     cursor: 'pointer',
@@ -67,24 +56,21 @@ const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) =
             })}
           </Stack>
 
-          <Box
-            sx={{
-              position: 'relative',
-              width: 300,
-              height: 300,
-              border: '1px solid #ccc',
-              borderRadius: 2,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'hidden',
-            }}
-          >
+          <Box sx={{
+            position: 'relative',
+            width: 300,
+            height: 300,
+            border: '1px solid #ccc',
+            borderRadius: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+          }}>
             {SelectedSvg && <SelectedSvg width={zoomed ? 380 : 200} height={zoomed ? 380 : 200} />}
             <IconButton
-              onClick={handleToggleZoom}
+              onClick={() => setZoomed(!zoomed)}
               sx={{ position: 'absolute', bottom: 8, right: 8, backgroundColor: 'white' }}
-              aria-label="Zoom toggle"
             >
               {zoomed ? <ZoomOutIcon width={20} height={20} /> : <ZoomInIcon width={20} height={20} />}
             </IconButton>
@@ -104,15 +90,16 @@ const ProductDetails = ({ article, buttonRef, onAddToCart, onQuantityChange }) =
           <Box sx={{ display: 'flex', alignItems: 'center', mt: 3 }}>
             <TextField
               value={quantity}
-              onChange={handleChange}
+              onChange={(e) => onQuantityChange(e.target.value)}
               type="number"
               size="small"
               sx={{ width: 100, mr: 2 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">PCE</InputAdornment>
               }}
+              inputRef={buttonRef}
             />
-            <Button variant="contained" color="error" ref={buttonRef} onClick={handleClick}>
+            <Button variant="contained" color="error" onClick={handleClick}>
               Add to cart
             </Button>
           </Box>

@@ -1,34 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
+import { Box } from '@mui/material';
 import HeaderBar from '../templates/header-bar';
 import ProductDetails from '../templates/product-details';
 import Description from '../templates/product-description';
 import DetailsAndPricing from '../templates/details-and-pricing';
-import data from '../data/data.json';
-import { Box } from '@mui/material';
+import { useProductState } from '../hooks/useProductState';
 
 const ProductPage = () => {
-  const article = data.article;
-  const buttonRef = useRef();
-  const [showFloatingButton, setShowFloatingButton] = useState(false);
-  const [cartCount, setCartCount] = useState(data.cart.items);
-  const [cartAnimate, setCartAnimate] = useState(false);
-  const [lastAddedQty, setLastAddedQty] = useState(1);
+  const {
+    article,
+    quantity,
+    setQuantity,
+    cartCount,
+    cartAnimate,
+    showFloatingButton,
+    handleAddToCart,
+    buttonRef
+  } = useProductState();
 
-  const handleAddToCart = (quantity = 1) => {
-    setCartCount(prev => prev + parseInt(quantity, 10));
-    setCartAnimate(true);
-    setLastAddedQty(quantity);
-    setTimeout(() => setCartAnimate(false), 500);
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const rect = buttonRef.current?.getBoundingClientRect();
-      setShowFloatingButton(rect?.top < 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleStickyAddToCart = useCallback(() => {
+    handleAddToCart(quantity);
+  }, [handleAddToCart, quantity]);
 
   return (
     <>
@@ -36,10 +28,10 @@ const ProductPage = () => {
         article={article}
         cartCount={cartCount}
         animate={cartAnimate}
+        quantity={quantity}
+        onQuantityChange={setQuantity}
+        handleAddToCart={handleStickyAddToCart}
         showFloatingButton={showFloatingButton}
-        handleAddToCart={() => handleAddToCart(lastAddedQty)}
-        quantity={lastAddedQty}
-        onQuantityChange={setLastAddedQty}
       />
       <Box sx={{ display: 'flex', justifyContent: 'flex-start', px: 4, pr: '80px', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
         <Box sx={{ maxWidth: '90%', width: '100%' }}>
@@ -47,7 +39,8 @@ const ProductPage = () => {
             article={article}
             buttonRef={buttonRef}
             onAddToCart={handleAddToCart}
-            onQuantityChange={setLastAddedQty}
+            onQuantityChange={setQuantity}
+            quantity={quantity}
           />
           <Box sx={{ backgroundColor: '#f0f0f0', p: 4, borderRadius: 2 }}>
             <Description article={article} />

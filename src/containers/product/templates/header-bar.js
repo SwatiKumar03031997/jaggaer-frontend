@@ -1,10 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, IconButton, Badge, Button, TextField, InputAdornment } from '@mui/material';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  AppBar, Toolbar, Typography, Box, IconButton, Badge, Button, TextField, InputAdornment
+} from '@mui/material';
 import FavoriteIcon from '../../../icons/favorite.svg?react';
 import GridIcon from '../../../icons/facts-soft.svg?react';
 import CartIcon from '../../../icons/cart.svg?react';
 
-const HeaderBar = ({ article, cartCount, animate, showFloatingButton, handleAddToCart, quantity, onQuantityChange }) => {
+const HeaderBar = ({
+  article,
+  cartCount,
+  animate,
+  showFloatingButton,
+  handleAddToCart,
+  quantity,
+  onQuantityChange
+}) => {
   const [elevate, setElevate] = useState(false);
 
   useEffect(() => {
@@ -13,9 +23,9 @@ const HeaderBar = ({ article, cartCount, animate, showFloatingButton, handleAddT
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleQuantityChange = (e) => {
+  const handleQuantityInput = useCallback((e) => {
     onQuantityChange(e.target.value);
-  };
+  }, [onQuantityChange]);
 
   return (
     <AppBar position="sticky" elevation={elevate ? 4 : 0} sx={{ background: '#fff', borderBottom: '1px solid #ccc', color: 'black' }}>
@@ -24,17 +34,16 @@ const HeaderBar = ({ article, cartCount, animate, showFloatingButton, handleAddT
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {showFloatingButton && (
             <>
-            
-                  <TextField
-                        value={quantity}
-                        onChange={handleQuantityChange}
-                        type="number"
-                        size="small"
-                        sx={{ width: 100, mr: 2 }}
-                        InputProps={{
-                          endAdornment: <InputAdornment position="end">PCE</InputAdornment>
-                        }}
-                      />
+              <TextField
+                value={quantity}
+                onChange={handleQuantityInput}
+                type="number"
+                size="small"
+                sx={{ width: 100 }}
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">PCE</InputAdornment>
+                }}
+              />
               <Button variant="contained" color="error" size="small" onClick={handleAddToCart}>
                 Add to cart
               </Button>
